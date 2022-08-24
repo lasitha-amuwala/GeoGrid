@@ -14,8 +14,7 @@ const Map = ({ center, zoom }: MapProps) => {
 	const ref = useRef<HTMLDivElement>(null);
 	const [map, setMap] = useState<google.maps.Map>();
 
-// const baseMap = new google.maps.S
-	const darkMap = new google.maps.StyledMapType(darkModeMap, { name: 'darkMode' });
+	// const baseMap = new google.maps.S
 
 	useEffect(() => {
 		if (ref.current && !map) {
@@ -28,9 +27,10 @@ const Map = ({ center, zoom }: MapProps) => {
 				})
 			);
 		}
+		const darkMap = new google.maps.StyledMapType(darkModeMap, { name: 'darkMode' });
 		map?.mapTypes.set('darkMode', darkMap);
 		map?.setMapTypeId('darkMode');
-	}, [ref, map]);
+	}, [ref, map, center, zoom]);
 
 	return <div ref={ref} id='map'></div>;
 };

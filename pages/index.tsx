@@ -85,14 +85,18 @@ const Home: NextPage = () => {
 						<FormControl>
 							<FormLabel>Address</FormLabel>
 							<InputGroup>
-								<InputLeftElement pointerEvents='none' children={<BiSearchAlt />} />
+								<InputLeftElement pointerEvents='none'>
+									<BiSearchAlt />
+								</InputLeftElement>
 								<Input autoFocus type='text' variant='filled' placeholder='Enter a location or business' />
 							</InputGroup>
 						</FormControl>
 						<FormControl>
 							<FormLabel>Keyword</FormLabel>
 							<InputGroup>
-								<InputLeftElement pointerEvents='none' children={<BiKey />} />
+								<InputLeftElement pointerEvents='none'>
+									<BiKey />
+								</InputLeftElement>
 								<Input variant='filled' placeholder='Enter a search keyword'></Input>
 							</InputGroup>
 						</FormControl>
