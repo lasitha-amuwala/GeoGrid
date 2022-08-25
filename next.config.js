@@ -10,15 +10,7 @@ const securityHeaders = [
 const nextConfig = {
 	reactStrictMode: true,
 	swcMinify: true,
-	async headers() {
-		return [
-			{
-				// Apply these headers to all routes in your application.
-				source: '/:path*',
-				headers: securityHeaders,
-			},
-		];
-	},
+	env: { MAPS_API_KEY: process.env.NEXT_PUBLIC_MAPS_API_KEY },
 };
 
 module.exports = nextConfig;

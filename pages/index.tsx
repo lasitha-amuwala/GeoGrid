@@ -42,7 +42,7 @@ const Home: NextPage = () => {
 
 	return (
 		<Box h='100vh' pos='relative'>
-			<Wrapper apiKey={process.env.NEXT_PUBLIC_MAPS_API_KEY ?? ''} render={render}>
+			<Wrapper apiKey={process.env.MAPS_API_KEY ?? ''} render={render}>
 				<Map center={{ lat: 43.653226, lng: -79.3831843 }} zoom={15} />
 				<Box
 					shadow='xl'
