@@ -8,6 +8,16 @@ export const darkModeMap = [
 		stylers: [{ color: '#d59563' }],
 	},
 	{
+		featureType: 'landscape.man_made.building',
+		elementType: 'geometry.fill',
+		stylers: [{ color: '#27313e' }],
+	},
+	{
+		featureType: 'landscape.man_made.building',
+		elementType: 'geometry.stroke',
+		stylers: [{ color: '#6a7790' }],
+	},
+	{
 		featureType: 'poi',
 		elementType: 'labels.text.fill',
 		stylers: [{ color: '#d59563' }],

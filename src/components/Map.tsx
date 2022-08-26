@@ -1,3 +1,4 @@
+import { useColorModeValue } from '@chakra-ui/react';
 import { useState, useRef, useEffect } from 'react';
 import { darkModeMap } from '../../styles/darkModeMap';
 
@@ -14,7 +15,12 @@ const Map = ({ center, zoom }: MapProps) => {
 	const ref = useRef<HTMLDivElement>(null);
 	const [map, setMap] = useState<google.maps.Map>();
 
-	// const baseMap = new google.maps.S
+	const mapType = useColorModeValue('roadmap', 'darkMode');
+
+	const darkMap = new google.maps.StyledMapType(darkModeMap, { name: 'darkMode' });
+	map?.mapTypes.set('darkMode', darkMap);
+
+	useEffect(() => map?.setMapTypeId(mapType), [mapType]);
 
 	useEffect(() => {
 		if (ref.current && !map) {
@@ -22,15 +28,12 @@ const Map = ({ center, zoom }: MapProps) => {
 				new window.google.maps.Map(ref.current, {
 					center,
 					zoom,
-					mapTypeId: 'darkMode',
+					mapTypeId: mapType,
 					disableDefaultUI: true,
-				})
+				} as google.maps.MapOptions)
 			);
 		}
-		const darkMap = new google.maps.StyledMapType(darkModeMap, { name: 'darkMode' });
-		map?.mapTypes.set('darkMode', darkMap);
-		map?.setMapTypeId('darkMode');
-	}, [ref, map, center, zoom]);
+	}, [ref, map, center, zoom, mapType]);
 
 	return <div ref={ref} id='map'></div>;
 };
