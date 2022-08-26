@@ -44,15 +44,9 @@ const Home: NextPage = () => {
 
 	const toggleDarkModeIcon = useColorModeValue(<FaMoon color='#A0AEC0' />, <FaSun color='#A0AEC0' />);
 
-	const variants = {
-		open: { opacity: 1, y: 0 },
-		closed: { opacity: 0, y: '100%' },
-		animate: {},
-	};
-
 	return (
 		<Box h='100vh' pos='relative' maxH='100vh' overflow='hidden'>
-			<Wrapper apiKey={process.env.MAPS_API_KEY ?? ''} render={render}>
+			<Wrapper apiKey={process.env.NEXT_PUBLIC_MAPS_API_KEY ?? ''} render={render}>
 				<Map center={{ lat: 43.653226, lng: -79.3831843 }} zoom={15}  />
 				<Box
 					as={motion.div}
