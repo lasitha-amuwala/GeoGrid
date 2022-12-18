@@ -4,7 +4,7 @@ import Input from './Input';
 
 type Props = { onPlaceChange: (arg: google.maps.LatLngLiteral) => void };
 
-export const SearchBar = ({ onPlaceChange }: Props) => {
+export const AutoComplete = ({ onPlaceChange }: Props) => {
 	useEffect(() => {
 		const input = document.getElementById('input') as HTMLInputElement;
 		const options = {

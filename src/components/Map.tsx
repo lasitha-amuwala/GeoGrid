@@ -7,22 +7,23 @@ interface MapProps extends google.maps.MapOptions {
 	onIdle?: (map: google.maps.Map) => void;
 	children?: React.ReactNode;
 	center: google.maps.LatLngLiteral;
+	darkMode: boolean;
 }
 
-const Map = ({ center }: MapProps) => {
+const Map = ({ center, darkMode }: MapProps) => {
 	const ref = useRef<HTMLDivElement>(null);
 	const [map, setMap] = useState<google.maps.Map>();
 
 	const zoom = 15;
-	const mapType = 'darkMode';
-	const darkMap = new google.maps.StyledMapType(darkModeMap, { name: 'darkMode' });
-	map?.mapTypes.set('darkMode', darkMap);
 
 	useEffect(() => initMap(), [ref, map]);
-	useEffect(() => map?.setCenter(center), [center]);
-	useEffect(() => map?.setMapTypeId(mapType), [mapType, map]);
+	useEffect(() => map?.setCenter(center), [center, map]);
+	useEffect(() => map?.setMapTypeId(darkMode ? 'darkmap' : 'roadmap'), [darkMode, map]);
 
 	const initMap = () => {
+		const darkMap = new google.maps.StyledMapType(darkModeMap, { name: 'darkmap' });
+		map?.mapTypes.set('darkmap', darkMap);
+
 		if (ref.current && !map) {
 			setMap(
 				new window.google.maps.Map(ref.current, {
@@ -30,7 +31,7 @@ const Map = ({ center }: MapProps) => {
 					zoom,
 					minZoom: zoom - 3,
 					maxZoom: zoom + 3,
-					mapTypeId: mapType,
+					mapTypeId: 'darkmap',
 					zoomControl: true,
 					disableDefaultUI: true,
 				} as google.maps.MapOptions)

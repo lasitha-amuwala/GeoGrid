@@ -31,8 +31,16 @@ a {
 }
 @tailwind base;
 
-@layer base{
-	input { @apply p-2 rounded-md bg-white/[0.04] focus-within:bg-white/0}
+@layer base {
+	input {
+		@apply p-2 rounded-md  bg-black/[0.05] dark:bg-white/[0.05];
+	}
 }
 @tailwind components;
-@tailwind utilities
+
+@layer components {
+	.buttonColor {
+		@apply bg-black/5 dark:bg-white/5  dark:hover:bg-white/10 dark:active:bg-white/20;
+	}
+}
+@tailwind utilities;
