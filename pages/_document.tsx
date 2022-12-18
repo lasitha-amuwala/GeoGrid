@@ -1,16 +1,16 @@
-import { ColorModeScript } from '@chakra-ui/react';
 import { Html, Head, Main, NextScript } from 'next/document';
-import { theme } from '../styles/theme';
 
 const Document = () => {
 	return (
 		<Html lang='en'>
 			<Head />
 			<body>
-				<ColorModeScript initialColorMode={theme.config.initialColorMode} />
 				<Main />
 				<NextScript />
 			</body>
+			<script
+				async
+				src='https://maps.googleapis.com/maps/api/js?key=AIzaSyAjx8jdzhqVLKpx6e22kgFJZOHpVk-uqVo&libraries=places'></script>
 		</Html>
 	);
 };

@@ -29,3 +29,10 @@ a {
 #map {
 	height: 100%;
 }
+@tailwind base;
+
+@layer base{
+	input { @apply p-2 rounded-md bg-white/[0.04] focus-within:bg-white/0}
+}
+@tailwind components;
+@tailwind utilities

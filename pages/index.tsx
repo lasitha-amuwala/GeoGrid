@@ -1,120 +1,77 @@
 import type { NextPage } from 'next';
-import Head from 'next/head';
-import Image from 'next/image';
-import Map from '../src/components/Map';
-import styles from '../styles/Home.module.css';
 import { Wrapper, Status } from '@googlemaps/react-wrapper';
-import {
-	Box,
-	Button,
-	FormControl,
-	FormLabel,
-	Heading,
-	HStack,
-	IconButton,
-	Input,
-	InputGroup,
-	InputLeftElement,
-	Link,
-	useBoolean,
-	useColorMode,
-	useColorModeValue,
-	VStack,
-} from '@chakra-ui/react';
-import { BiSearchAlt, BiKey } from 'react-icons/bi';
-import { FaSun, FaMoon, FaGithub } from 'react-icons/fa';
+import { BiKey } from 'react-icons/bi';
+import { FaMoon, FaGithub } from 'react-icons/fa';
 import { MdExpandMore, MdExpandLess } from 'react-icons/md';
-import { AnimatePresence, AnimateSharedLayout, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useState } from 'react';
-import { useEffect } from 'react';
-
-const render = (status: Status) => {
-	return <h1>{status}</h1>;
-};
-
-interface StyleProps {
-	featureType: string;
-	elementType?: string;
-	stylers: [];
-}
+import { SearchBar } from '../src/components/SearchBar';
+import Input from '../src/components/Input';
+import Map from '../src/components/Map';
 
 const Home: NextPage = () => {
-	const {  toggleColorMode } = useColorMode();
 	const [isOpen, setOpen] = useState(true);
+	const [center, setCenter] = useState<google.maps.LatLngLiteral>({ lat: 43.653226, lng: -79.3831843 });
 
-	const toggleDarkModeIcon = useColorModeValue(<FaMoon color='#A0AEC0' />, <FaSun color='#A0AEC0' />);
+	// const toggleDarkModeIcon = <FaMoon color='#A0AEC0' />;
+	const toggleIsOpen = () => setOpen(!isOpen);
+
+	const onPlaceChange = (newCenter: google.maps.LatLngLiteral) => {
+		console.log('new', newCenter);
+		setCenter(newCenter);
+	};
+
+	const mapRenderer = (status: Status) => {
+		switch (status) {
+			case Status.LOADING:
+				return <div>DICK</div>;
+			case Status.FAILURE:
+				return <div>DICK</div>;
+			case Status.SUCCESS:
+				return <Map center={center} />;
+		}
+	};
 
 	return (
-		<Box h='100vh' pos='relative' maxH='100vh' overflow='hidden'>
-			<Wrapper apiKey={process.env.NEXT_PUBLIC_MAPS_API_KEY ?? ''} render={render}>
-				<Map center={{ lat: 43.653226, lng: -79.3831843 }} zoom={15}  />
-				<Box
-					as={motion.div}
-					layout='position'
-					shadow='xl'
-					rounded='2xl'
-					roundedBottom={{ base: 0, md: '2xl' }}
-					my={{ base: 0, md: 10 }}
-					mx={{ base: 0, md: 7 }}
-					px={{ base: 5, md: 7 }}
-					py={5}
-					bottom={0}
-					left={0}
-					pos='absolute'
-					h={{ base: '30%', md: 'auto' }}
-					w={{ base: 'full', md: '450px' }}
-					backdropFilter='auto'
-					backdropBlur='32px'
-					bg={useColorModeValue('whiteAlpha.800', 'blackAlpha.500')}>
-					<HStack spacing={3}>
-						<Heading flexGrow={1}>GeoGrid</Heading>
-						<Link fontSize='24px'>
-							<FaGithub />
-						</Link>
-						<IconButton
-							variant='ghost'
-							rounded='full'
-							aria-label='colormode'
-							fontSize='22px'
-							onClick={toggleColorMode}
-							icon={toggleDarkModeIcon}
-						/>
-						<IconButton
-							variant='solid'
-							rounded='full'
-							aria-label='colormode'
-							fontSize='22px'
-							onClick={() => setOpen(!isOpen)}
-							icon={isOpen ? <MdExpandMore /> : <MdExpandLess />}
-						/>
-					</HStack>
+		<div className='h-screen relative max-h-screen overflow-hidden'>
+			<Wrapper apiKey={process.env.NEXT_PUBLIC_MAPS_API_KEY ?? ''} render={mapRenderer}></Wrapper>
+			<motion.div
+				layout='position'
+				className='h-auto w-[450px] bg-black bg-opacity-40 absolute bottom-0 left-0 backdrop-blur-xl rounded-2xl my-10 mx-7 px-7 py-5 shadow-2xl'>
+				<div className='flex flex-col gap-5 '>
+					<div className='flex flex-row gap-3 items-center'>
+						<h2 className='font-bold text-4xl flex-grow'>GeoGrid</h2>
+						<button>
+							<a className='text-2xl'>
+								<FaGithub />
+							</a>
+						</button>
+						<button className='rounded-full p-2 bg-white/5 text-[22px] hover:bg-white/10 active:bg-white/20  transition-colors duration-200'>
+							<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor' className='w-5 h-5'>
+								<path
+									fillRule='evenodd'
+									d='M7.455 2.004a.75.75 0 01.26.77 7 7 0 009.958 7.967.75.75 0 011.067.853A8.5 8.5 0 116.647 1.921a.75.75 0 01.808.083z'
+									clipRule='evenodd'
+								/>
+							</svg>
+						</button>
+						<button
+							onClick={toggleIsOpen}
+							className='rounded-full p-2 bg-white/5 text-[22px] hover:bg-white/10 active:bg-white/20 transition-colors duration-200'>
+							{isOpen ? <MdExpandMore /> : <MdExpandLess />}
+						</button>
+					</div>
 					{isOpen && (
 						<motion.div initial={{ visibility: 'hidden' }} animate={{ visibility: 'visible' }}>
-							<VStack spacing={5} pt={3} overflow='hidden'>
-								<FormControl>
-									<FormLabel>Address</FormLabel>
-									<InputGroup>
-										<InputLeftElement pointerEvents='none'>
-											<BiSearchAlt />
-										</InputLeftElement>
-										<Input autoFocus type='text' variant='filled' placeholder='Enter a location or business' />
-									</InputGroup>
-								</FormControl>
-								<FormControl>
-									<FormLabel>Keyword</FormLabel>
-									<InputGroup>
-										<InputLeftElement pointerEvents='none'>
-											<BiKey />
-										</InputLeftElement>
-										<Input variant='filled' placeholder='Enter a search keyword'></Input>
-									</InputGroup>
-								</FormControl>
-							</VStack>
+							<div className='flex flex-col gap-5 pt-3 overflow-hidden'>
+								<SearchBar onPlaceChange={onPlaceChange} />
+								<Input icon={<BiKey />} placeholder='Enter a search keyword' />
+							</div>
 						</motion.div>
 					)}
-				</Box>
-			</Wrapper>
-		</Box>
+				</div>
+			</motion.div>
+		</div>
 	);
 };
 
