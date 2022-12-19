@@ -1,16 +1,15 @@
-import { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, Children, isValidElement, cloneElement } from 'react';
 import { darkModeMap } from '../../styles/darkModeMap';
 
 interface MapProps extends google.maps.MapOptions {
 	style?: google.maps.StyledMapType;
 	onClick?: (e: google.maps.MapMouseEvent) => void;
 	onIdle?: (map: google.maps.Map) => void;
-	children?: React.ReactNode;
 	center: google.maps.LatLngLiteral;
 	darkMode: boolean;
 }
 
-const Map = ({ center, darkMode }: MapProps) => {
+const Map = ({ center, darkMode, children }: React.PropsWithChildren<MapProps>) => {
 	const ref = useRef<HTMLDivElement>(null);
 	const [map, setMap] = useState<google.maps.Map>();
 
@@ -29,8 +28,7 @@ const Map = ({ center, darkMode }: MapProps) => {
 				new window.google.maps.Map(ref.current, {
 					center,
 					zoom,
-					minZoom: zoom - 3,
-					maxZoom: zoom + 3,
+
 					mapTypeId: 'darkmap',
 					zoomControl: true,
 					disableDefaultUI: true,
@@ -39,7 +37,18 @@ const Map = ({ center, darkMode }: MapProps) => {
 		}
 	};
 
-	return <div ref={ref} id='map'></div>;
+	return (
+		<>
+			<div ref={ref} id='map' />
+			{Children.map(children, (child) => {
+				if (isValidElement(child)) {
+					// set the map prop on the child component
+					// @ts-ignore
+					return cloneElement(child, { map });
+				}
+			})}
+		</>
+	);
 };
 
 export default Map;
