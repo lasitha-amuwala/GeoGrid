@@ -69,7 +69,6 @@ const Home: NextPage = () => {
 		setDistanceText(e.target.value);
 	};
 
-	console.log(process.env.NEXT_PUBLIC_MAPS_API_KEY);
 	return (
 		<div className={`${darkMode && 'dark'} h-screen relative max-h-screen overflow-hidden`}>
 			<Wrapper
@@ -103,7 +102,7 @@ const Home: NextPage = () => {
 										<div className='flex flex-col'>
 											<h2 className='flex-grow font-medium mb-2'>Grid Size</h2>
 											<div className='flex gap-1'>
-												<Input icon={<TbGridDots />} value={`${gridSize} x ${gridSize}`}></Input>
+												<Input icon={<TbGridDots />} value={`${gridSize} x ${gridSize}`} readOnly />
 												<div className='flex flex-col gap-1'>
 													<button
 														className='px-[2px] rounded-t-md text-[18px] buttonColor transition-colors duration-200'
