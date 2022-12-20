@@ -6,10 +6,11 @@ interface MapProps extends google.maps.MapOptions {
 	onClick?: (e: google.maps.MapMouseEvent) => void;
 	onIdle?: (map: google.maps.Map) => void;
 	center: google.maps.LatLngLiteral;
+	grid: google.maps.LatLngLiteral[];
 	darkMode: boolean;
 }
 
-const Map = ({ center, darkMode, children }: React.PropsWithChildren<MapProps>) => {
+const Map = ({ center, darkMode, children, grid }: React.PropsWithChildren<MapProps>) => {
 	const ref = useRef<HTMLDivElement>(null);
 	const [map, setMap] = useState<google.maps.Map>();
 
@@ -18,6 +19,11 @@ const Map = ({ center, darkMode, children }: React.PropsWithChildren<MapProps>) 
 	useEffect(() => initMap(), [ref, map]);
 	useEffect(() => map?.setCenter(center), [center, map]);
 	useEffect(() => map?.setMapTypeId(darkMode ? 'darkmap' : 'roadmap'), [darkMode, map]);
+	useEffect(() => {
+		const bounds = new google.maps.LatLngBounds();
+		grid.map((coord) => bounds.extend(coord));
+		map?.fitBounds(bounds, 100);
+	}, [grid, map]);
 
 	const initMap = () => {
 		const darkMap = new google.maps.StyledMapType(darkModeMap, { name: 'darkmap' });

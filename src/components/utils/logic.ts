@@ -63,13 +63,14 @@ const ReverseHaversine = (origin: google.maps.LatLngLiteral, angle: number, dist
 export const createCordinateGrid = (origin: google.maps.LatLngLiteral, size: number, distance: number) => {
 	const coordinateGrid: google.maps.LatLngLiteral[] = [];
 	const offsetGrid = createOffsetGrid(size);
+	const dist = distance / 1000 / Math.floor(size / 2);
 
 	for (let i = 0; i < size; i++) {
 		for (let j = 0; j < size; j++) {
 			const x = offsetGrid[i][j].x;
 			const y = offsetGrid[i][j].y;
 			const angle = calculateAngle(x, y);
-			const coordinateDistance = Math.abs(pythagoras(x * distance, y * distance));
+			const coordinateDistance = Math.abs(pythagoras(x * dist, y * dist));
 			coordinateGrid.push(ReverseHaversine(origin, angle, coordinateDistance));
 		}
 	}
