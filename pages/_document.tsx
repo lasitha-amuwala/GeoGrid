@@ -8,9 +8,6 @@ const Document = () => {
 				<Main />
 				<NextScript />
 			</body>
-			<script
-				async
-				src='https://maps.googleapis.com/maps/api/js?key=AIzaSyAjx8jdzhqVLKpx6e22kgFJZOHpVk-uqVo&libraries=places'></script>
 		</Html>
 	);
 };

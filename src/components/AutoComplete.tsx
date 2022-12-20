@@ -18,7 +18,7 @@ export const AutoComplete = ({ onPlaceChange }: Props) => {
 				onPlaceChange({ lat: place.geometry.location.lat(), lng: place.geometry.location.lng() });
 			}
 		});
-	}, []);
+	});
 
 	return <Input icon={<BiSearchAlt />} id='input'></Input>;
 };

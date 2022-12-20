@@ -37,8 +37,8 @@ const Home: NextPage = () => {
 			case Status.SUCCESS:
 				return (
 					<Map center={center} darkMode={darkMode} grid={coordinateGrid}>
-						{coordinateGrid.map((coord) => (
-							<Marker position={coord} />
+						{coordinateGrid.map((coord, i) => (
+							<Marker position={coord} key={i} />
 						))}
 					</Map>
 				);
@@ -69,11 +69,14 @@ const Home: NextPage = () => {
 		setDistanceText(e.target.value);
 	};
 
-	// useEffect()
-
+	console.log(process.env.NEXT_PUBLIC_MAPS_API_KEY);
 	return (
 		<div className={`${darkMode && 'dark'} h-screen relative max-h-screen overflow-hidden`}>
-			<Wrapper apiKey={process.env.NEXT_PUBLIC_MAPS_API_KEY ?? ''} render={mapRenderer}></Wrapper>
+			<Wrapper
+				apiKey={process.env.NEXT_PUBLIC_MAPS_API_KEY ?? ''}
+				libraries={['places']}
+				version='weekly'
+				render={mapRenderer}></Wrapper>
 			<motion.div className='h-auto w-[450px] bg-white/[70%] dark:bg-gray-900/[70%] absolute bottom-0 left-0 backdrop-blur-xl rounded-2xl my-10 mx-10 px-5 py-5 shadow-2xl overflow-hidden'>
 				<div className='flex flex-col text-black dark:text-white'>
 					<div className='flex flex-row gap-3 items-center'>

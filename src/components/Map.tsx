@@ -14,34 +14,31 @@ const Map = ({ center, darkMode, children, grid }: React.PropsWithChildren<MapPr
 	const ref = useRef<HTMLDivElement>(null);
 	const [map, setMap] = useState<google.maps.Map>();
 
-	const zoom = 15;
-
-	useEffect(() => initMap(), [ref, map]);
 	useEffect(() => map?.setCenter(center), [center, map]);
 	useEffect(() => map?.setMapTypeId(darkMode ? 'darkmap' : 'roadmap'), [darkMode, map]);
+
 	useEffect(() => {
 		const bounds = new google.maps.LatLngBounds();
 		grid.map((coord) => bounds.extend(coord));
 		map?.fitBounds(bounds, 100);
 	}, [grid, map]);
 
-	const initMap = () => {
+	useEffect(() => {
 		const darkMap = new google.maps.StyledMapType(darkModeMap, { name: 'darkmap' });
 		map?.mapTypes.set('darkmap', darkMap);
 
 		if (ref.current && !map) {
 			setMap(
 				new window.google.maps.Map(ref.current, {
-					center,
-					zoom,
-
+					center: { lat: 43.653226, lng: -79.3831843 },
+					zoom: 15,
 					mapTypeId: 'darkmap',
 					zoomControl: true,
 					disableDefaultUI: true,
 				} as google.maps.MapOptions)
 			);
 		}
-	};
+	}, [ref, map]);
 
 	return (
 		<>
