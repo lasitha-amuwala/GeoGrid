@@ -70,7 +70,7 @@ const Home: NextPage = () => {
 	};
 
 	return (
-		<div className={`${darkMode && 'dark'} h-[100svh] relative overflow-hidden`}>
+		<div className={`${darkMode && 'dark'} h-[100dvh] relative overflow-hidden`}>
 			<Wrapper
 				apiKey={process.env.NEXT_PUBLIC_MAPS_API_KEY ?? ''}
 				libraries={['places']}
