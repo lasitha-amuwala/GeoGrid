@@ -33,7 +33,7 @@ const Map = ({ center, darkMode, children, grid }: React.PropsWithChildren<MapPr
 					center: { lat: 43.653226, lng: -79.3831843 },
 					zoom: 15,
 					mapTypeId: 'darkmap',
-					zoomControl: true,
+					zoomControl: false,
 					disableDefaultUI: true,
 				} as google.maps.MapOptions)
 			);

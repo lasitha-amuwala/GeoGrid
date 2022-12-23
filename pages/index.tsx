@@ -76,7 +76,7 @@ const Home: NextPage = () => {
 				libraries={['places']}
 				version='weekly'
 				render={mapRenderer}></Wrapper>
-			<motion.div className='h-auto w-auto sm:w-[450px] bg-white/[70%] dark:bg-gray-900/[70%] absolute bottom-0 left-0 right-0 backdrop-blur-xl rounded-b-none sm:rounded-b-2xl rounded-2xl mx-3 sm:my-10 sm:mx-10 px-5 py-5 shadow-2xl overflow-hidden'>
+			<motion.div className='h-auto w-auto sm:w-[450px] bg-white/[70%] dark:bg-gray-900/[70%] absolute bottom-0 left-0 right-0 backdrop-blur-xl rounded-2xl mx-3 my-10 sm:mx-10 px-5 py-5 shadow-2xl overflow-hidden'>
 				<div className='flex flex-col text-black dark:text-white'>
 					<div className='flex flex-row gap-3 items-center'>
 						<h2 className='font-bold text-4xl flex-grow'>GeoGrid</h2>
