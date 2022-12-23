@@ -20,7 +20,7 @@ const Map = ({ center, darkMode, children, grid }: React.PropsWithChildren<MapPr
 	useEffect(() => {
 		const bounds = new google.maps.LatLngBounds();
 		grid.map((coord) => bounds.extend(coord));
-		map?.fitBounds(bounds, 100);
+		map?.fitBounds(bounds, 75);
 	}, [grid, map]);
 
 	useEffect(() => {
