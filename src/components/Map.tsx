@@ -1,26 +1,27 @@
-import React, { useState, useRef, useEffect, Children, isValidElement, cloneElement } from 'react';
+import React, { useState, useRef, useEffect, Children, isValidElement, cloneElement, useCallback, memo } from 'react';
 import { darkModeMap } from '../../styles/darkModeMap';
-
+import { motion } from 'framer-motion';
 interface MapProps extends google.maps.MapOptions {
 	style?: google.maps.StyledMapType;
-	onClick?: (e: google.maps.MapMouseEvent) => void;
-	onIdle?: (map: google.maps.Map) => void;
 	center: google.maps.LatLngLiteral;
 	grid: google.maps.LatLngLiteral[];
 	darkMode: boolean;
+	onClick?: (e: google.maps.MapMouseEvent) => void;
+	onIdle?: (map: google.maps.Map) => void;
 }
 
-const Map = ({ center, darkMode, children, grid }: React.PropsWithChildren<MapProps>) => {
+const Map = memo(({ center, darkMode, children, grid }: React.PropsWithChildren<MapProps>) => {
 	const ref = useRef<HTMLDivElement>(null);
 	const [map, setMap] = useState<google.maps.Map>();
 
 	useEffect(() => map?.setCenter(center), [center, map]);
+
 	useEffect(() => map?.setMapTypeId(darkMode ? 'darkmap' : 'roadmap'), [darkMode, map]);
 
 	useEffect(() => {
 		const bounds = new google.maps.LatLngBounds();
 		grid.map((coord) => bounds.extend(coord));
-		map?.fitBounds(bounds, 75);
+		map?.fitBounds(bounds, 250);
 	}, [grid, map]);
 
 	useEffect(() => {
@@ -30,7 +31,7 @@ const Map = ({ center, darkMode, children, grid }: React.PropsWithChildren<MapPr
 		if (ref.current && !map) {
 			setMap(
 				new window.google.maps.Map(ref.current, {
-					center: { lat: 43.653226, lng: -79.3831843 },
+					center,
 					zoom: 15,
 					mapTypeId: 'darkmap',
 					zoomControl: false,
@@ -38,10 +39,14 @@ const Map = ({ center, darkMode, children, grid }: React.PropsWithChildren<MapPr
 				} as google.maps.MapOptions)
 			);
 		}
-	}, [ref, map]);
+	}, [ref, map, center]);
 
 	return (
-		<>
+		<motion.div
+			initial={{ opacity: 0 }}
+			animate={{ opacity: 1 }}
+			transition={{ duration: 1 }}
+			className='w-full h-full'>
 			<div ref={ref} id='map' />
 			{Children.map(children, (child) => {
 				if (isValidElement(child)) {
@@ -50,8 +55,9 @@ const Map = ({ center, darkMode, children, grid }: React.PropsWithChildren<MapPr
 					return cloneElement(child, { map });
 				}
 			})}
-		</>
+		</motion.div>
 	);
-};
+});
 
+Map.displayName = 'Map';
 export default Map;

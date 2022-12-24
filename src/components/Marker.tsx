@@ -1,7 +1,16 @@
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 
-export const Marker: React.FC<google.maps.MarkerOptions> = (options) => {
+const Marker = memo((options: google.maps.MarkerOptions) => {
 	const [marker, setMarker] = useState<google.maps.Marker>();
+
+	const circle = {
+		path: google.maps.SymbolPath.CIRCLE,
+		fillColor: 'red',
+		fillOpacity: 0.6,
+		strokeWeight: 0,
+		rotation: 0,
+		scale: 17,
+	};
 
 	useEffect(() => {
 		if (!marker) {
@@ -18,9 +27,12 @@ export const Marker: React.FC<google.maps.MarkerOptions> = (options) => {
 
 	useEffect(() => {
 		if (marker) {
-			marker.setOptions(options);
+			marker.setOptions({ label: '15', ...options });
 		}
 	}, [marker, options]);
 
 	return null;
-};
+});
+
+Marker.displayName = 'Marker';
+export default Marker;
