@@ -156,7 +156,7 @@ const Home: NextPage = () => {
 														</button>
 													</div>
 												</div>
-												<p className='text-xs text-gray-500 py-1'>Distance of search area (meters)</p>
+												<p className='text-xs text-gray-500 py-1'>Search Distance (meters)</p>
 											</div>
 										</div>
 									</div>
