@@ -1,5 +1,6 @@
 import type { NextPage } from 'next';
 import { useCallback, useEffect, useState } from 'react';
+import { useThemeContext } from './_app';
 import { CgSpinner as Spinner } from 'react-icons/cg';
 import { Wrapper, Status } from '@googlemaps/react-wrapper';
 import { ControlPanel } from '../src/components/ControlPanel';
@@ -8,14 +9,13 @@ import Map from '../src/components/Map';
 import Marker from '../src/components/Marker';
 
 const Home: NextPage = () => {
+	const { darkMode } = useThemeContext();
 	const [gridSize, setGridSize] = useState<number>(3);
 	const [distance, setDistance] = useState<number>(100);
-	const [darkMode, setDarkMode] = useState<boolean>(true);
 	const [mapLoaded, setMapLoaded] = useState<Boolean>(false);
 	const [coordinateGrid, setCoordinateGrid] = useState<google.maps.LatLngLiteral[]>([]);
 	const [center, setCenter] = useState<google.maps.LatLngLiteral>({ lat: 43.653226, lng: -79.3831843 });
 
-	const toggleDarkMode = useCallback(() => setDarkMode(!darkMode), [darkMode]);
 	const onGridSizeChange = useCallback((size: number) => setGridSize(size), []);
 	const onDistanceChange = useCallback((dist: number) => setDistance(dist), []);
 	const onPlaceChange = (newCenter: google.maps.LatLngLiteral) => setCenter(newCenter);
@@ -63,8 +63,6 @@ const Home: NextPage = () => {
 				<ControlPanel
 					gridSize={gridSize}
 					distance={distance}
-					darkMode={darkMode}
-					toggleDarkMode={toggleDarkMode}
 					onPlaceChange={onPlaceChange}
 					onGridSizeChange={onGridSizeChange}
 					onDistanceChange={onDistanceChange}

@@ -1,11 +1,15 @@
 import React from 'react';
 import { MdLightMode } from 'react-icons/md';
+import { useThemeContext } from '../../pages/_app';
 
-type Props = { darkMode: boolean; toggle: () => void };
+export const ToggleColorMode = () => {
+	const { darkMode, setDarkMode } = useThemeContext();
+	const toggleDarkMode = () => setDarkMode(!darkMode);
 
-export const ToggleColorMode = ({ darkMode, toggle }: Props) => {
 	return (
-		<button className='rounded-full p-2 text-[20px] buttonColor transition-colors duration-200' onClick={toggle}>
+		<button
+			className='rounded-full p-2 text-[20px] buttonColor transition-colors duration-200'
+			onClick={toggleDarkMode}>
 			{darkMode ? (
 				<MdLightMode />
 			) : (

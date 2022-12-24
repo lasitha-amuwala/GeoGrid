@@ -10,24 +10,14 @@ import { MdExpandLess, MdExpandMore } from 'react-icons/md';
 import Input from './Input';
 
 interface Props {
-	darkMode: boolean;
 	gridSize: number;
 	distance: number;
-	toggleDarkMode: () => void;
 	onPlaceChange: (args: google.maps.LatLngLiteral) => void;
 	onGridSizeChange: (arg: number) => void;
 	onDistanceChange: (arg: number) => void;
 }
 
-export const ControlPanel = ({
-	darkMode,
-	gridSize,
-	distance,
-	toggleDarkMode,
-	onPlaceChange,
-	onGridSizeChange,
-	onDistanceChange,
-}: Props) => {
+export const ControlPanel = ({ gridSize, distance, onPlaceChange, onGridSizeChange, onDistanceChange }: Props) => {
 	const [isOpen, setOpen] = useState<boolean>(true);
 
 	const [distanceText, setDistanceText] = useState<number>(100);
@@ -67,7 +57,7 @@ export const ControlPanel = ({
 							<FaGithub />
 						</a>
 					</button>
-					<ToggleColorMode darkMode={darkMode} toggle={toggleDarkMode} />
+					<ToggleColorMode />
 					<button
 						onClick={toggleIsOpen}
 						className='rounded-full p-2 text-[22px] buttonColor transition-colors duration-200'>
