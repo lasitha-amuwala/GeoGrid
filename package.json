@@ -14,6 +14,7 @@
     "@googlemaps/react-wrapper": "^1.1.35",
     "@googlemaps/typescript-guards": "^2.0.2",
     "@next/bundle-analyzer": "^12.2.5",
+    "@vercel/analytics": "^0.1.6",
     "fast-equals": "^4.0.1",
     "framer-motion": "^6.5.1",
     "next": "12.2.5",
