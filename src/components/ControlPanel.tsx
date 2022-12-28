@@ -47,7 +47,7 @@ export const ControlPanel = ({ gridSize, distance, onPlaceChange, onGridSizeChan
 		<motion.div
 			initial={{ opacity: 0 }}
 			animate={{ opacity: 1 }}
-			transition={{ delay: 0.25 }}
+			transition={{ delay: 0.15}}
 			className='h-auto w-auto sm:w-[450px] bg-white/[80%] dark:bg-gray-900/[80%] absolute bottom-0 left-0 right-0 backdrop-blur-xl rounded-2xl mx-3 my-7 sm:mx-10 px-5 py-5 shadow-2xl overflow-hidden'>
 			<div className='flex flex-col text-black dark:text-white'>
 				<div className='flex flex-row gap-3 items-center'>

@@ -1,21 +1,21 @@
-import React, { useState, useRef, useEffect, Children, isValidElement, cloneElement, useCallback, memo } from 'react';
-import { darkModeMap } from '../../styles/darkModeMap';
+import React, { useState, useRef, useEffect, Children, isValidElement, cloneElement, memo } from 'react';
+import { darkModeMap, styles } from '../../styles/darkModeMap';
 import { motion } from 'framer-motion';
+import { useThemeContext } from '../../pages/_app';
 interface MapProps extends google.maps.MapOptions {
 	style?: google.maps.StyledMapType;
 	center: google.maps.LatLngLiteral;
 	grid: google.maps.LatLngLiteral[];
-	darkMode: boolean;
 	onClick?: (e: google.maps.MapMouseEvent) => void;
 	onIdle?: (map: google.maps.Map) => void;
 }
 
-const Map = memo(({ center, darkMode, children, grid }: React.PropsWithChildren<MapProps>) => {
+const Map = memo(({ center, children, grid }: React.PropsWithChildren<MapProps>) => {
 	const ref = useRef<HTMLDivElement>(null);
 	const [map, setMap] = useState<google.maps.Map>();
+	const { darkMode } = useThemeContext();
 
 	useEffect(() => map?.setCenter(center), [center, map]);
-
 	useEffect(() => map?.setMapTypeId(darkMode ? 'darkmap' : 'roadmap'), [darkMode, map]);
 
 	useEffect(() => {
@@ -36,6 +36,7 @@ const Map = memo(({ center, darkMode, children, grid }: React.PropsWithChildren<
 					mapTypeId: 'darkmap',
 					zoomControl: false,
 					disableDefaultUI: true,
+					styles,
 				} as google.maps.MapOptions)
 			);
 		}

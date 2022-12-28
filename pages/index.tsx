@@ -4,7 +4,7 @@ import { useThemeContext } from './_app';
 import { CgSpinner as Spinner } from 'react-icons/cg';
 import { Wrapper, Status } from '@googlemaps/react-wrapper';
 import { ControlPanel } from '../src/components/ControlPanel';
-import { createCordinateGrid } from '../src/components/utils/logic';
+import { createCordinateGrid } from '../src/utils/logic';
 import Map from '../src/components/Map';
 import Marker from '../src/components/Marker';
 
@@ -43,7 +43,7 @@ const Home: NextPage = () => {
 		if (status === Status.LOADING) return <LoadingComponent />;
 		setMapLoaded(true);
 		return (
-			<Map center={center} darkMode={darkMode} grid={coordinateGrid}>
+			<Map center={center} grid={coordinateGrid}>
 				{coordinateGrid?.map((coord, i) => (
 					<Marker position={coord} key={i} />
 				))}

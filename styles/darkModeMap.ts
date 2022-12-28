@@ -10,7 +10,7 @@ export const darkModeMap = [
 	{
 		featureType: 'landscape.man_made.building',
 		elementType: 'geometry.fill',
-		stylers: [{ color: '#27313e' }],
+		stylers: [{ color: '#333c4a' }],
 	},
 	{
 		featureType: 'landscape.man_made.building',
@@ -29,8 +29,18 @@ export const darkModeMap = [
 	},
 	{
 		featureType: 'poi.park',
-		elementType: 'labels.text.fill',
-		stylers: [{ color: '#6b9a76' }],
+		elementType: 'labels',
+		stylers: [{ visibility: 'off' }],
+	},
+	{
+		featureType: 'poi.school',
+		elementType: 'labels',
+		stylers: [{ visibility: 'off' }],
+	},
+	{
+		featureType: 'poi.place_of_worship',
+		elementType: 'labels',
+		stylers: [{ visibility: 'off' }],
 	},
 	{
 		featureType: 'road',
@@ -69,8 +79,8 @@ export const darkModeMap = [
 	},
 	{
 		featureType: 'transit.station',
-		elementType: 'labels.text.fill',
-		stylers: [{ color: '#d59563' }],
+		elementType: 'labels',
+		stylers: [{ visibility: 'off' }],
 	},
 	{
 		featureType: 'water',
@@ -86,5 +96,28 @@ export const darkModeMap = [
 		featureType: 'water',
 		elementType: 'labels.text.stroke',
 		stylers: [{ color: '#17263c' }],
+	},
+];
+
+export const styles = [
+	{
+		featureType: 'poi.park',
+		elementType: 'labels',
+		stylers: [{ visibility: 'off' }],
+	},
+	{
+		featureType: 'poi.school',
+		elementType: 'labels',
+		stylers: [{ visibility: 'off' }],
+	},
+	{
+		featureType: 'poi.place_of_worship',
+		elementType: 'labels',
+		stylers: [{ visibility: 'off' }],
+	},
+	{
+		featureType: 'transit.station',
+		elementType: 'labels',
+		stylers: [{ visibility: 'off' }],
 	},
 ];
