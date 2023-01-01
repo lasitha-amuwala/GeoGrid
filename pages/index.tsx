@@ -15,12 +15,16 @@ const Home: NextPage = () => {
 	const [mapLoaded, setMapLoaded] = useState<Boolean>(false);
 	const [coordinateGrid, setCoordinateGrid] = useState<google.maps.LatLngLiteral[]>([]);
 	const [center, setCenter] = useState<google.maps.LatLngLiteral>({ lat: 43.653226, lng: -79.3831843 });
-
-	const onGridSizeChange = useCallback((size: number) => setGridSize(size), []);
-	const onDistanceChange = useCallback((dist: number) => setDistance(dist), []);
-	const onPlaceChange = (newCenter: google.maps.LatLngLiteral) => setCenter(newCenter);
+	const [keyword, setKeyword] = useState<string>('');
+	const [searchResults, setSearchResults] = useState();
 
 	useEffect(() => setCoordinateGrid(createCordinateGrid(center, gridSize, distance)), [center, gridSize, distance]);
+	// useEffect(() => setSearchResults(getNearbySearch(coordinateGrid, keyword)), []);
+
+	const onPlaceChange = (center: google.maps.LatLngLiteral) => setCenter(center);
+	const onGridSizeChange = useCallback((size: number) => setGridSize(size), []);
+	const onDistanceChange = useCallback((dist: number) => setDistance(dist), []);
+	const handleKeywordSubmit = useCallback((key: string) => setKeyword(key), []);
 
 	const LoadingComponent = () => (
 		<div className='w-full h-full justify-center items-center text-center bg-gray-800 flex flex-col gap-7'>
@@ -66,6 +70,7 @@ const Home: NextPage = () => {
 					onPlaceChange={onPlaceChange}
 					onGridSizeChange={onGridSizeChange}
 					onDistanceChange={onDistanceChange}
+					handleKeywordSubmit={handleKeywordSubmit}
 				/>
 			)}
 		</div>

@@ -1,25 +1,34 @@
-import { useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import { AutoComplete } from './AutoComplete';
 import { ToggleColorMode } from './ToggleColorMode';
 import { AnimatePresence, motion } from 'framer-motion';
-import { BiKey } from 'react-icons/bi';
+import { BiKey, BiSearchAlt } from 'react-icons/bi';
 import { FaGithub } from 'react-icons/fa';
 import { TbGridDots } from 'react-icons/tb';
 import { RiPinDistanceFill } from 'react-icons/ri';
 import { MdExpandLess, MdExpandMore } from 'react-icons/md';
+
 import Input from './Input';
 
 interface Props {
 	gridSize: number;
 	distance: number;
-	onPlaceChange: (args: google.maps.LatLngLiteral) => void;
+	onPlaceChange: (arg: google.maps.LatLngLiteral) => void;
 	onGridSizeChange: (arg: number) => void;
 	onDistanceChange: (arg: number) => void;
+	handleKeywordSubmit: (arg: string) => void;
 }
 
-export const ControlPanel = ({ gridSize, distance, onPlaceChange, onGridSizeChange, onDistanceChange }: Props) => {
+export const ControlPanel = ({
+	gridSize,
+	distance,
+	onPlaceChange,
+	onGridSizeChange,
+	onDistanceChange,
+	handleKeywordSubmit,
+}: Props) => {
 	const [isOpen, setOpen] = useState<boolean>(true);
-
+	const [keyword, setKeyword] = useState<string>('');
 	const [distanceText, setDistanceText] = useState<number>(100);
 
 	const toggleIsOpen = () => setOpen(!isOpen);
@@ -43,11 +52,20 @@ export const ControlPanel = ({ gridSize, distance, onPlaceChange, onGridSizeChan
 		onDistanceChange(distance - 50);
 	};
 
+	const onKeywordChange = (event: ChangeEvent<HTMLInputElement>) => {
+		setKeyword(event.target.value);
+	};
+
+	const onKeywordSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+		event.preventDefault();
+		handleKeywordSubmit(keyword);
+	};
+
 	return (
 		<motion.div
 			initial={{ opacity: 0 }}
 			animate={{ opacity: 1 }}
-			transition={{ delay: 0.15}}
+			transition={{ delay: 0.15 }}
 			className='h-auto w-auto sm:w-[450px] bg-white/[80%] dark:bg-gray-900/[80%] absolute bottom-0 left-0 right-0 backdrop-blur-xl rounded-2xl mx-3 my-7 sm:mx-10 px-5 py-5 shadow-2xl overflow-hidden'>
 			<div className='flex flex-col text-black dark:text-white'>
 				<div className='flex flex-row gap-3 items-center'>
@@ -69,7 +87,19 @@ export const ControlPanel = ({ gridSize, distance, onPlaceChange, onGridSizeChan
 						<motion.div initial={{ height: 0 }} animate={{ height: 240 }} exit={{ height: 0 }}>
 							<div className='flex flex-col gap-5 overflow-hidden pt-5'>
 								<AutoComplete onPlaceChange={onPlaceChange} />
-								<Input icon={<BiKey />} placeholder='Enter a search keyword' />
+								<form className='flex gap-1' onSubmit={onKeywordSubmit}>
+									<div className='grow'>
+										<Input
+											icon={<BiKey />}
+											value={keyword}
+											onChange={onKeywordChange}
+											placeholder='Enter a search keyword'
+										/>
+									</div>
+									<button className='p-2 px-3 rounded-md buttonColor' type='submit'>
+										<BiSearchAlt />
+									</button>
+								</form>
 								<div className='flex gap-7'>
 									<div className='flex flex-col'>
 										<h2 className='flex-grow font-medium mb-2'>Grid Size</h2>

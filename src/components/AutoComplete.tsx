@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { BiSearchAlt } from 'react-icons/bi';
 import Input from './Input';
+import { MdLocationPin } from 'react-icons/md';
 
 type Props = { onPlaceChange: (arg: google.maps.LatLngLiteral) => void };
 
@@ -20,5 +20,5 @@ export const AutoComplete = ({ onPlaceChange }: Props) => {
 		});
 	});
 
-	return <Input icon={<BiSearchAlt />} id='input'></Input>;
+	return <Input icon={<MdLocationPin />} id='input'></Input>;
 };
