@@ -15,32 +15,30 @@ const Map = memo(({ center, children, grid }: React.PropsWithChildren<MapProps>)
 	const [map, setMap] = useState<google.maps.Map>();
 	const { darkMode } = useThemeContext();
 
-	useEffect(() => map?.setCenter(center), [center, map]);
-	useEffect(() => map?.setMapTypeId(darkMode ? 'darkmap' : 'roadmap'), [darkMode, map]);
+	const initialOptions = {
+		backgroundColor: '#1f2937',
+		zoom: 18,
+		zoomControl: false,
+		disableDefaultUI: true,
+		styles,
+	};
 
 	useEffect(() => {
 		const bounds = new google.maps.LatLngBounds();
 		grid.map((coord) => bounds.extend(coord));
 		map?.fitBounds(bounds, 250);
-	}, [grid, map]);
+	}, [map, grid]);
+
+	useEffect(() => map?.setCenter(center), [map, center]);
+	useEffect(() => map?.setMapTypeId(darkMode ? 'darkmap' : 'roadmap'), [map, darkMode]);
 
 	useEffect(() => {
-		const darkMap = new google.maps.StyledMapType(darkModeMap, { name: 'darkmap' });
-		map?.mapTypes.set('darkmap', darkMap);
-
 		if (ref.current && !map) {
-			setMap(
-				new window.google.maps.Map(ref.current, {
-					center,
-					zoom: 15,
-					mapTypeId: 'darkmap',
-					zoomControl: false,
-					disableDefaultUI: true,
-					styles,
-				} as google.maps.MapOptions)
-			);
+			const map = new window.google.maps.Map(ref.current, initialOptions);
+			map?.mapTypes.set('darkmap', new google.maps.StyledMapType(darkModeMap, { name: 'darkmap' }));
+			setMap(map);
 		}
-	}, [ref, map, center]);
+	}, [ref, map]);
 
 	return (
 		<motion.div
