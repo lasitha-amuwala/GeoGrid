@@ -12,7 +12,6 @@ const Home: NextPage = () => {
 	const { darkMode } = useThemeContext();
 	const [gridSize, setGridSize] = useState<number>(3);
 	const [distance, setDistance] = useState<number>(100);
-	const [mapLoaded, setMapLoaded] = useState<Boolean>(false);
 	const [coordinateGrid, setCoordinateGrid] = useState<google.maps.LatLngLiteral[]>([]);
 	const [center, setCenter] = useState<google.maps.LatLngLiteral>({ lat: 43.653226, lng: -79.3831843 });
 	const [keyword, setKeyword] = useState<string>('');
@@ -44,15 +43,7 @@ const Home: NextPage = () => {
 
 	const mapRenderer = (status: Status) => {
 		if (status === Status.FAILURE) return <ErrorComponent />;
-		if (status === Status.LOADING) return <LoadingComponent />;
-		setMapLoaded(true);
-		return (
-			<Map center={center} grid={coordinateGrid}>
-				{coordinateGrid?.map((coord, i) => (
-					<Marker position={coord} key={i} />
-				))}
-			</Map>
-		);
+		return <LoadingComponent />;
 	};
 
 	return (
@@ -61,9 +52,12 @@ const Home: NextPage = () => {
 				apiKey={process.env.NEXT_PUBLIC_MAPS_API_KEY ?? ''}
 				libraries={['places']}
 				version='weekly'
-				render={mapRenderer}
-			/>
-			{mapLoaded && (
+				render={mapRenderer}>
+				<Map center={center} grid={coordinateGrid}>
+					{coordinateGrid?.map((coord, i) => {
+						if (i > 0) return <Marker position={coord} key={i} />;
+					})}
+				</Map>
 				<ControlPanel
 					gridSize={gridSize}
 					distance={distance}
@@ -72,7 +66,7 @@ const Home: NextPage = () => {
 					onDistanceChange={onDistanceChange}
 					handleKeywordSubmit={handleKeywordSubmit}
 				/>
-			)}
+			</Wrapper>
 		</div>
 	);
 };
