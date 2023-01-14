@@ -6,7 +6,7 @@ import { Wrapper, Status } from '@googlemaps/react-wrapper';
 import { ControlPanel } from '../src/components/ControlPanel';
 import { createCordinateGrid } from '../src/utils/logic';
 import Map from '../src/components/Map';
-import Marker from '../src/components/Marker';
+import { Marker } from '../src/components/Marker';
 
 const Home: NextPage = () => {
 	const { darkMode } = useThemeContext();
@@ -48,15 +48,11 @@ const Home: NextPage = () => {
 
 	return (
 		<div className={`${darkMode && 'dark'} h-[100dvh] relative overflow-hidden bg-gray-800`}>
-			<Wrapper
-				apiKey={process.env.NEXT_PUBLIC_MAPS_API_KEY ?? ''}
-				libraries={['places']}
-				version='weekly'
-				render={mapRenderer}>
+			<Wrapper apiKey={process.env.NEXT_PUBLIC_MAPS_API_KEY!} libraries={['places']} render={mapRenderer}>
 				<Map center={center} grid={coordinateGrid}>
-					{coordinateGrid?.map((coord, i) => {
-						if (i > 0) return <Marker position={coord} key={i} />;
-					})}
+					{coordinateGrid?.map((coord, i) => (
+						<Marker position={coord} />
+					))}
 				</Map>
 				<ControlPanel
 					gridSize={gridSize}

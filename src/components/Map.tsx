@@ -16,11 +16,11 @@ const Map = memo(({ center, children, grid }: React.PropsWithChildren<MapProps>)
 	const { darkMode } = useThemeContext();
 
 	const initialOptions = {
-		backgroundColor: '#1f2937',
+		styles,
 		zoom: 18,
 		zoomControl: false,
 		disableDefaultUI: true,
-		styles,
+		backgroundColor: '#1f2937',
 	};
 
 	useEffect(() => {
