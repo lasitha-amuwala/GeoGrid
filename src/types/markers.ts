@@ -1,5 +1,5 @@
 export interface MarkerGridItem {
 	position: google.maps.LatLngLiteral;
-	rank?: number;
+	rank: number;
 	results?: google.maps.places.PlaceResult[];
 }

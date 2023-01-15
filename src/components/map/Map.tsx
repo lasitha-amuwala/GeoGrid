@@ -16,17 +16,6 @@ const Map = memo(({ center, children, markers }: React.PropsWithChildren<MapProp
 	const [map, setMap] = useState<google.maps.Map>();
 	const { darkMode } = useThemeContext();
 
-	const initialOptions = {
-		styles,
-		zoom: 18,
-		zoomControl: false,
-		clickableIcons: false,
-		disableDefaultUI: true,
-		disableDoubleClickZoom: true,
-		backgroundColor: '#1f2937',
-		// mapId: 'ffd140acad74e088'
-	};
-
 	useEffect(() => {
 		const bounds = new google.maps.LatLngBounds();
 		markers.map(({ position }) => bounds.extend(position));
@@ -38,8 +27,18 @@ const Map = memo(({ center, children, markers }: React.PropsWithChildren<MapProp
 
 	useEffect(() => {
 		if (ref.current && !map) {
+			const initialOptions = {
+				styles,
+				zoom: 18,
+				zoomControl: false,
+				clickableIcons: false,
+				disableDefaultUI: true,
+				disableDoubleClickZoom: true,
+				backgroundColor: '#1f2937',
+			};
+
 			const map = new window.google.maps.Map(ref.current, initialOptions);
-			map?.mapTypes.set('darkmap', new google.maps.StyledMapType(darkModeMap, { name: 'darkmap' }));
+			map.mapTypes.set('darkmap', new google.maps.StyledMapType(darkModeMap, { name: 'darkmap' }));
 			setMap(map);
 		}
 	}, [ref, map]);
