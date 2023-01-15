@@ -1,16 +1,17 @@
 import React, { useState, useRef, useEffect, Children, isValidElement, cloneElement, memo } from 'react';
-import { darkModeMap, styles } from '../../styles/darkModeMap';
-import { motion } from 'framer-motion';
-import { useThemeContext } from '../../pages/_app';
+import { darkModeMap, styles } from '../../../styles/darkModeMap';
+import { useThemeContext } from '../../../pages/_app';
+import { MarkerGridItem } from '../../types/markers';
+
 interface MapProps extends google.maps.MapOptions {
 	style?: google.maps.StyledMapType;
 	center: google.maps.LatLngLiteral;
-	grid: google.maps.LatLngLiteral[];
+	markers: MarkerGridItem[];
 	onClick?: (e: google.maps.MapMouseEvent) => void;
 	onIdle?: (map: google.maps.Map) => void;
 }
 
-const Map = memo(({ center, children, grid }: React.PropsWithChildren<MapProps>) => {
+const Map = memo(({ center, children, markers }: React.PropsWithChildren<MapProps>) => {
 	const ref = useRef<HTMLDivElement>(null);
 	const [map, setMap] = useState<google.maps.Map>();
 	const { darkMode } = useThemeContext();
@@ -19,15 +20,18 @@ const Map = memo(({ center, children, grid }: React.PropsWithChildren<MapProps>)
 		styles,
 		zoom: 18,
 		zoomControl: false,
+		clickableIcons: false,
 		disableDefaultUI: true,
+		disableDoubleClickZoom: true,
 		backgroundColor: '#1f2937',
+		// mapId: 'ffd140acad74e088'
 	};
 
 	useEffect(() => {
 		const bounds = new google.maps.LatLngBounds();
-		grid.map((coord) => bounds.extend(coord));
+		markers.map(({ position }) => bounds.extend(position));
 		map?.fitBounds(bounds, 250);
-	}, [map, grid]);
+	}, [map, markers]);
 
 	useEffect(() => map?.setCenter(center), [map, center]);
 	useEffect(() => map?.setMapTypeId(darkMode ? 'darkmap' : 'roadmap'), [map, darkMode]);
@@ -41,11 +45,7 @@ const Map = memo(({ center, children, grid }: React.PropsWithChildren<MapProps>)
 	}, [ref, map]);
 
 	return (
-		<motion.div
-			initial={{ opacity: 0 }}
-			animate={{ opacity: 1 }}
-			transition={{ duration: 1 }}
-			className='w-full h-full'>
+		<>
 			<div ref={ref} id='map' />
 			{Children.map(children, (child) => {
 				if (isValidElement(child)) {
@@ -54,7 +54,7 @@ const Map = memo(({ center, children, grid }: React.PropsWithChildren<MapProps>)
 					return cloneElement(child, { map });
 				}
 			})}
-		</motion.div>
+		</>
 	);
 });
 
