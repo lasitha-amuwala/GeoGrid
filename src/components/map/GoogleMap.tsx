@@ -7,6 +7,7 @@ import { MarkerGridItem } from '../../types/markers';
 import { createCordinateGrid } from '../../utils/logic';
 import { Wrapper, Status } from '@googlemaps/react-wrapper';
 import { Spinner } from '../Spinner';
+import { useQuery } from 'react-query';
 
 interface GoogleMapsProps {
 	center: google.maps.LatLngLiteral;
@@ -19,6 +20,7 @@ export const GoogleMap = ({ center, gridSize, distance, keyword, children }: Pro
 	const [markerGrid, setMarkerGrid] = useState<MarkerGridItem[]>([]);
 	const [coordinateGrid, setCoordinateGrid] = useState<google.maps.LatLngLiteral[]>([]);
 
+	// const result = useQuery(['nearbySearch'], () => fetch('/api/nearbySearch').then(async (res) => await res.json()));
 	useEffect(() => setCoordinateGrid(createCordinateGrid(center, gridSize, distance)), [center, gridSize, distance]);
 
 	useEffect(() => {
