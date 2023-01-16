@@ -1,5 +1,5 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
-import { AutoComplete } from './AutoComplete';
+import { AutoComplete } from './input/AutoComplete';
 import { ToggleColorMode } from './ToggleColorMode';
 import { AnimatePresence, motion } from 'framer-motion';
 import { BiKey, BiSearchAlt } from 'react-icons/bi';
@@ -8,7 +8,8 @@ import { TbGridDots } from 'react-icons/tb';
 import { RiPinDistanceFill } from 'react-icons/ri';
 import { MdExpandLess, MdExpandMore } from 'react-icons/md';
 
-import Input from './Input';
+import Input from './input/Input';
+import { Spinner } from './Spinner';
 
 interface Props {
 	gridSize: number;
@@ -30,6 +31,7 @@ export const ControlPanel = ({
 	const [isOpen, setOpen] = useState<boolean>(true);
 	const [keyword, setKeyword] = useState<string>('');
 	const [distanceText, setDistanceText] = useState<number>(100);
+	const [buttonLoading, setButtonLoading] = useState<boolean>(false);
 
 	const toggleIsOpen = () => setOpen(!isOpen);
 
@@ -59,6 +61,7 @@ export const ControlPanel = ({
 	const onKeywordSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		handleKeywordSubmit(keyword);
+		setButtonLoading(true);
 	};
 
 	return (
@@ -96,8 +99,8 @@ export const ControlPanel = ({
 											placeholder='Enter a search keyword'
 										/>
 									</div>
-									<button className='p-2 px-3 rounded-md buttonColor' type='submit'>
-										<BiSearchAlt />
+									<button className='p-2 px-[10px] rounded-md buttonColor text-xl' type='submit'>
+										{buttonLoading ? <Spinner /> : <BiSearchAlt />}
 									</button>
 								</form>
 								<div className='flex gap-7'>
