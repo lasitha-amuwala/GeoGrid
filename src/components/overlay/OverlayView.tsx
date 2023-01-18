@@ -1,6 +1,6 @@
 import { PropsWithChildren, useEffect, useMemo } from 'react';
 import { createPortal } from 'react-dom';
-import { createOverlay } from './overlay';
+import { createOverlay } from '../../utils/overlay';
 
 type OverlayProps = PropsWithChildren<{
 	position: google.maps.LatLng | google.maps.LatLngLiteral;
