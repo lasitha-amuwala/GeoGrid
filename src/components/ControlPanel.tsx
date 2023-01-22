@@ -10,11 +10,12 @@ import { MdExpandLess, MdExpandMore } from 'react-icons/md';
 
 import Input from './input/Input';
 import { Spinner } from './Spinner';
+import { PlaceType } from '../types/types';
 
 interface Props {
 	gridSize: number;
 	distance: number;
-	onPlaceChange: (arg: google.maps.LatLngLiteral) => void;
+	onPlaceChange: (arg: PlaceType) => void;
 	onGridSizeChange: (arg: number) => void;
 	onDistanceChange: (arg: number) => void;
 	handleKeywordSubmit: (arg: string) => void;

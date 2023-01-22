@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, Children, isValidElement, cloneElement, memo } from 'react';
 import { darkModeMap, styles } from '../../../styles/darkModeMap';
 import { useThemeContext } from '../../../pages/_app';
-import { MarkerGridItem } from '../../types/markers';
+import { MarkerGridItem } from '../../types/types';
 
 interface MapProps extends google.maps.MapOptions {
 	style?: google.maps.StyledMapType;
@@ -18,7 +18,7 @@ const Map = memo(({ center, children, markers }: React.PropsWithChildren<MapProp
 
 	useEffect(() => {
 		const bounds = new google.maps.LatLngBounds();
-		markers.map(({ position }) => bounds.extend(position));
+		markers.map(({ location }) => bounds.extend(location));
 		map?.fitBounds(bounds, 250);
 	}, [map, markers]);
 

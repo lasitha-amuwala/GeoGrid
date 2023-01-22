@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Input from './Input';
 import { MdLocationPin } from 'react-icons/md';
+import { PlaceType } from '../../types/types';
 
-type Props = { onPlaceChange: (arg: google.maps.LatLngLiteral) => void };
+type Props = { onPlaceChange: (arg: PlaceType) => void };
 
 export const AutoComplete = ({ onPlaceChange }: Props) => {
 	useEffect(() => {
@@ -14,7 +15,10 @@ export const AutoComplete = ({ onPlaceChange }: Props) => {
 		autocomplete.addListener('place_changed', () => {
 			const place = autocomplete.getPlace();
 			if (place.geometry && place.geometry.location) {
-				onPlaceChange({ lat: place.geometry.location.lat(), lng: place.geometry.location.lng() });
+				onPlaceChange({
+					position: { lat: place.geometry.location.lat(), lng: place.geometry.location.lng() },
+					placeId: place.place_id!,
+				});
 			}
 		});
 	}, []);
