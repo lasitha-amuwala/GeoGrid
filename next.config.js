@@ -7,6 +7,10 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 const nextConfig = {
 	reactStrictMode: true,
 	swcMinify: true,
+	i18n: {
+		locales: ['en'],
+		defaultLocale: 'en',
+	},
 };
 
 module.exports = withBundleAnalyzer(nextConfig);

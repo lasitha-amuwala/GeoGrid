@@ -11,6 +11,7 @@ import { MdExpandLess, MdExpandMore } from 'react-icons/md';
 import Input from './input/Input';
 import { Spinner } from './Spinner';
 import { PlaceType } from '../types/types';
+import Link from 'next/link';
 
 interface Props {
 	gridSize: number;
@@ -74,13 +75,15 @@ export const ControlPanel = ({
 			<div className='flex flex-col text-black dark:text-white'>
 				<div className='flex flex-row gap-3 items-center'>
 					<h2 className='font-bold text-4xl flex-grow'>GeoGrid</h2>
-					<button>
-						<a className='text-2xl'>
-							<FaGithub />
-						</a>
-					</button>
+					<Link
+						aria-label='Visit the github page for this app'
+						className='text-3xl text-gray-300 hover:text-white transition-all duration-150'
+						href={'https://github.com/lasitha-amuwala/GeoGrid'}>
+						<FaGithub />
+					</Link>
 					<ToggleColorMode />
 					<button
+						aria-label={isOpen ? 'Close control panel' : 'Expand control panel'}
 						onClick={toggleIsOpen}
 						className='rounded-full p-2 text-[22px] buttonColor transition-colors duration-200'>
 						{isOpen ? <MdExpandMore /> : <MdExpandLess />}
@@ -100,22 +103,29 @@ export const ControlPanel = ({
 											placeholder='Enter a search keyword'
 										/>
 									</div>
-									<button className='p-2 px-[10px] rounded-md buttonColor text-xl' type='submit'>
+									<button
+										aria-label='Search for keyword'
+										className='p-2 px-[10px] rounded-md buttonColor text-xl'
+										type='submit'>
 										{buttonLoading ? <Spinner /> : <BiSearchAlt />}
 									</button>
 								</form>
 								<div className='flex gap-7'>
 									<div className='flex flex-col'>
-										<h2 className='flex-grow font-medium mb-2'>Grid Size</h2>
+										<label htmlFor='gridsizeInput' className='flex-grow font-medium mb-2'>
+											Grid Size
+										</label>
 										<div className='flex gap-1'>
-											<Input icon={<TbGridDots />} value={`${gridSize} x ${gridSize}`} readOnly />
+											<Input id='gridsizeInput' icon={<TbGridDots />} value={`${gridSize} x ${gridSize}`} readOnly />
 											<div className='flex flex-col gap-1'>
 												<button
+													aria-label='Increse grid size'
 													className='px-[2px] rounded-t-md text-[18px] buttonColor transition-colors duration-200'
 													onClick={increaseGridSize}>
 													<MdExpandLess />
 												</button>
 												<button
+													aria-label='Decrese grid size'
 													className='px-[2px] rounded-b-md text-[18px] buttonColor transition-colors duration-200'
 													onClick={decreaseGridSize}>
 													<MdExpandMore />
@@ -125,16 +135,25 @@ export const ControlPanel = ({
 										<p className='text-xs text-gray-500 py-1'>Number of points</p>
 									</div>
 									<div className='flex flex-col'>
-										<h2 className='flex-grow font-medium mb-2'>Distance</h2>
+										<label htmlFor='distanceInput' className='flex-grow font-medium mb-2'>
+											Distance
+										</label>
 										<div className='flex gap-1'>
-											<Input icon={<RiPinDistanceFill />} value={distanceText} onChange={onDistanceChange} />
+											<Input
+												id='distanceInput'
+												icon={<RiPinDistanceFill />}
+												value={distanceText}
+												onChange={onDistanceChange}
+											/>
 											<div className='flex flex-col gap-1'>
 												<button
+													aria-label='Increase search distance'
 													className='px-[2px] rounded-t-md text-[18px] buttonColor transition-colors duration-200'
 													onClick={increaseDistance}>
 													<MdExpandLess />
 												</button>
 												<button
+													aria-label='Decrease search distance'
 													className='px-[2px] rounded-b-md text-[18px] buttonColor transition-colors duration-200'
 													onClick={decreaseDistance}>
 													<MdExpandMore />

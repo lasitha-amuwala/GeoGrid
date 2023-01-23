@@ -8,6 +8,7 @@ export const ToggleColorMode = () => {
 
 	return (
 		<button
+			aria-label='toggle dark mode'
 			className='rounded-full p-2 text-[20px] buttonColor transition-colors duration-200'
 			onClick={toggleDarkMode}>
 			{darkMode ? (
