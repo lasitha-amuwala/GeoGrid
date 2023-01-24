@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import Input from './Input';
+import { useEffect } from 'react';
 import { MdLocationPin } from 'react-icons/md';
 import { PlaceType } from '../../types/types';
+import Input from './Input';
 
 type Props = { onPlaceChange: (arg: PlaceType) => void };
 

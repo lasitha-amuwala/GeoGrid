@@ -10,15 +10,12 @@
 		"prod": "npm run build && npm run start"
 	},
 	"dependencies": {
-		"@googlemaps/js-api-loader": "^1.14.3",
 		"@googlemaps/react-wrapper": "^1.1.35",
 		"@googlemaps/typescript-guards": "^2.0.2",
 		"@next/bundle-analyzer": "^12.2.5",
 		"@tanstack/react-query": "^4.22.0",
 		"@tanstack/react-query-devtools": "^4.22.0",
 		"@vercel/analytics": "^0.1.8",
-		"axios": "^1.2.2",
-		"fast-equals": "^4.0.1",
 		"framer-motion": "^6.5.1",
 		"next": "^13.1.1",
 		"react": "^18.2.0",

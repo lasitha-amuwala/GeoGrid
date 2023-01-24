@@ -1,8 +1,8 @@
-import React from 'react';
+import { ReactNode } from 'react';
 
 type Props = {
 	placeholder?: string;
-	icon?: React.ReactNode;
+	icon?: ReactNode;
 	onChange?: (arg: any) => void;
 	value?: string | number;
 	[key: string]: any;
